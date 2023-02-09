@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ylabrahm <ylabrahm@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 23:18:17 by ylabrahm          #+#    #+#             */
-/*   Updated: 2022/12/28 22:50:08 by ylabrahm         ###   ########.fr       */
+/*   Updated: 2022/12/28 23:01:03 by ylabrahm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*set_line(char *backup)
 {
@@ -93,18 +93,18 @@ char	*ft_reader(int fd, char *backup)
 
 char	*get_next_line(int fd)
 {
-	static char	*backup;
+	static char	*backup[OPEN_MAX];
 	char		*line;
 
-	backup = ft_reader(fd, backup);
-	if (!(backup))
+	backup[fd] = ft_reader(fd, backup[fd]);
+	if (!(backup[fd]))
 	{
-		free(backup);
-		backup = (NULL);
+		free(backup[fd]);
+		backup[fd] = (NULL);
 		return (0);
 	}
-	line = set_line(backup);
-	backup = set_strnig(backup);
+	line = set_line(backup[fd]);
+	backup[fd] = set_strnig(backup[fd]);
 	if (!(line[0]))
 	{
 		free(line);
